@@ -1,0 +1,18 @@
+[package]
+name = "fastlin"
+version = "0.1.0"
+edition = "2021"
+description = "an ultra-fast program for MTBC lineage typing"
+repository = "https://github.com/rderelle/fastlin"
+license = "MIT OR Apache-2.0"
+
+
+
+[dependencies]
+clap = { version = "4.2.2", features = ["derive"] }
+seq_io = "0.3.1"
+flate2 = "1.0.25"
+hashbrown = "0.13.2"
+ahash = "0.8.3"
+boomphf = "0.5.9"
+indicatif = "0.17.4"
