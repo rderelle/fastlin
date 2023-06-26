@@ -3,9 +3,10 @@
 
 ### Overview
 
-Fastlin is'\n
+Fastlin is an ultra-fast program to perform lineage typing of Mycobacterium tuberculosis complex (MTBC) samples. 
 
-__Reference:__ [TBA](https://www)
+Reference:[TBA](https://www)
+
 
 ### Installation
 To install fastlin, you must have the [rust toolchain](https://www.rust-lang.org/tools/install) installed.
