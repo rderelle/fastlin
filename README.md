@@ -1,6 +1,4 @@
-<p align="center">
-# fastlin
-<p>
+<h1 align="center">fastlin</h1>
 
 
 ### Overview
