@@ -39,8 +39,8 @@ Fastlin output consists on a tab-delimited file with the following fields:
 + nb_files: 'single' or 'paired'-end files
 + k_cov: theoretical kmer coverage of the fastq files(s) based on the number extracted kmer ()
 + mixture: pure ('no') or mixed ('yes') sample
-+ lineages: all lineages detected in the sample with their kmer occurences within paratheses
-+ log_barcodes: all SNP barcodes (indicated by their kmer occurences) passing the minimum occurence threshold
++ lineages: lineages detected in the sample with their kmer occurences within paratheses
++ log_barcodes: SNP barcodes passing the minimum occurence threshold, indicated by their kmer occurence and grouped by lineages
 
 Here is a simple example:
 > #sample&nbsp;&nbsp;&nbsp;&nbsp;nb_files&nbsp;&nbsp;&nbsp;&nbsp;k_cov&nbsp;&nbsp;&nbsp;&nbsp;mixture&nbsp;&nbsp;&nbsp;&nbsp;lineages&nbsp;&nbsp;&nbsp;&nbsp;log_barcodes  
