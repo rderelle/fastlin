@@ -1,4 +1,7 @@
+<p align="center">
 # fastlin
+<p>
+
 
 ### Overview
 
@@ -48,8 +51,8 @@ The sample ERRxxxxx contains a single strain belonging to lineage 2. This typing
 
 
 ### TO DO LIST
-+ add multi-threading
-+ add possiblity to analyse FASTA files (genome assemblies)
++ multi-threading
++ possiblity to analyse FASTA files (genome assemblies)
 
 
 
