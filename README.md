@@ -1,12 +1,12 @@
-### fastlin
+## fastlin
 
-## Overview
+# Overview
 
 Fastlin is'\n
 
 __Reference:__ <a href="">TBA</a>
 
-## Installation
+# Installation
 To install fastlin, you must have the [rust toolchain](https://www.rust-lang.org/tools/install) installed.
 ```
 cargo install fastlin
@@ -16,7 +16,7 @@ Or alternatively you can copy the code from this repository and install it using
 cargo install --path .
 ```
 
-## Running fastlin
+# Running fastlin
 The minimalist command line is:
 ```
 fastlin -d /path/directory_fastq_files -b barcodes_file.txt
@@ -26,15 +26,15 @@ I you are are sure the data are not BAM-derived fastq files, then we would recom
 fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 ```
 
-## Input files
+# Input files
 
 
 
-## Output file
+# Output file
 
 
 
-## TO DO LIST
+# TO DO LIST
    _ add multi-threading
    _ add possiblity to analyse FASTA files (genome assemblies)
 
