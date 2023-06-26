@@ -33,11 +33,6 @@ fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 
 
 ### Output file
-'''
-#sample	nb_files	k_cov	mixture	lineages	log_barcodes
-DRR185066	paired	116	no	1.1.1.1 (83)	1 (91, 105, 65, 77, 82, 80, 79, 98, 124, 86), 1.1 (96, 108, 112, 87, 90, 110, 103, 109, 117, 43), 1.1.1 (118, 89, 100, 110, 112, 103, 79, 104, 49, 117), 1.1.1.1 (85, 114, 117, 115, 80, 77, 88, 75, 82, 59), 4.6 (4)
-DRR185070	paired	80	no	1.1.1.1 (61)	1 (45, 40, 51, 50, 58, 75, 59, 57, 65, 56), 1.1 (65, 59, 69, 67, 85, 33, 86, 52, 41, 78), 1.1.1 (56, 62, 58, 65, 61, 66, 75, 72, 77, 30), 1.1.1.1 (50, 66, 41, 88, 58, 64, 53, 49, 74, 65)
-'''
 <p>Fastlin output consists on a tab-delimited file with the following fields:
 + sample: sample name
 + nb_files: 'single' or 'paired'-end files
