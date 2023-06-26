@@ -4,7 +4,7 @@
 
 Fastlin is'\n
 
-__Reference:__ <a href="">TBA</a>
+__Reference:__ [TBA](https://www)
 
 # Installation
 To install fastlin, you must have the [rust toolchain](https://www.rust-lang.org/tools/install) installed.
@@ -35,8 +35,8 @@ fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 
 
 # TO DO LIST
-   _ add multi-threading
-   _ add possiblity to analyse FASTA files (genome assemblies)
++ add multi-threading
++ add possiblity to analyse FASTA files (genome assemblies)
 
 
 
