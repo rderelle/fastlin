@@ -35,10 +35,16 @@ fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 Fastlin output consists on a tab-delimited file with the following fields:
 + sample: sample name
 + nb_files: 'single' or 'paired'-end files
-+ k_cov: kmer coverage of the sample calculated from the number of kmers extracted
++ k_cov: theoretical kmer coverage of the fastq files(s) based on the number extracted kmer ()
 + mixture: pure ('no') or mixed ('yes') sample
 + lineages: all lineages detected in the sample with their kmer occurences within paratheses
 + log_barcodes: all SNP barcodes (indicated by their kmer occurences) passing the minimum occurence threshold
+
+Here is a simple example:
+> #sample	nb_files	k_cov	mixture	lineages	log_barcodes
+> ERRxxxxx	paired	118	no	2 (45)	2 (42, 48, 39, 43, 54, 47, 45), 4.1 (4)
+
+The sample ERRxxxxx contains a single strain belonging to lineage 2. This typing is supported by 7 kmer barcodes, with a median number of occurences of 45. Since the abundance of the strain is far below the theoretical kmer coverage (equal here to 118), we can conclude that the sample is likely to contain high level of contaminations or sequencing errors.
 
 
 ### TO DO LIST
