@@ -17,7 +17,7 @@ cargo install --path .
 ```
 
 ### Running fastlin
-<p>The default command line is:
+The default command line is:
 ```
 fastlin -d /path/directory_fastq_files -b barcodes_file.txt
 ```
@@ -25,7 +25,6 @@ I you are are sure the data are not BAM-derived fastq files, then we would recom
 ```
 fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 ```
-<p>
 
 ### Input files
 <p>Fastlin takes as input the path of the directory containing the fastq files. The fastq files should be compressed, with extensions being either '.fastq.gz' or 'fq.gz'. Paired-end files should be in the form 'name_1.fq.gz' and 'name_2.fq.gz'. The directory can contain both paired-end and single-end fastq files.</p>
@@ -33,7 +32,7 @@ fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 
 
 ### Output file
-<p>Fastlin output consists on a tab-delimited file with the following fields:
+Fastlin output consists on a tab-delimited file with the following fields:
 + sample: sample name
 + nb_files: 'single' or 'paired'-end files
 + k_cov: kmer coverage of the sample calculated from the number of kmers extracted
