@@ -24,7 +24,7 @@ The default command line is:
 ```
 fastlin -d /path/directory_fastq_files -b barcodes_file.txt
 ```
-I you are sure the data are not BAM-derived fastq files, then we would recommend to apply a maximum kmer coverage threshold to reduce runtimes: 
+If your dataset does not contain BAM-derived fastq files, then we would recommend to apply a maximum kmer coverage threshold to reduce runtimes: 
 ```
 fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 ```
