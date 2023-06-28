@@ -31,7 +31,7 @@ fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 
 ### Input files
 <p>Fastlin takes as input the path of the directory containing the fastq files. The fastq files should be compressed, with extensions being either '.fastq.gz' or 'fq.gz'. Paired-end files should be in the form 'name_1.fq.gz' and 'name_2.fq.gz'. The directory can contain both paired-end and single-end fastq files.</p>
-<p>The MTBC barcode file can be downloaded from ([arcodes-fastlin](https://github.com/rderelle/barcodes-fastlin)). Alternatively, you can build and test your own kmer barcodes using the Python scripts available in that directory.</p> 
+<p>The MTBC barcode file can be downloaded from [barcodes-fastlin](https://github.com/rderelle/barcodes-fastlin). Alternatively, you can build and test your own kmer barcodes using the Python scripts available in that directory.</p> 
 
 
 ### Output file
