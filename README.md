@@ -3,7 +3,7 @@
 
 ### Overview
 
-Fastlin is an ultra-fast program to perform lineage typing of Mycobacterium tuberculosis complex (MTBC) fastq samples. Using a kmer-based approach, it can accuratly predict MTBC lineages and mixtures of MTBC lineages in seconds.
+Fastlin is an ultra-fast program to perform lineage typing of <i>Mycobacterium tuberculosis</i> complex (MTBC) fastq samples. Using a kmer-based approach, it can accuratly predict MTBC lineages and strain mixtures in seconds.
 
 Reference:[TBA](https://www)
 
