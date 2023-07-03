@@ -9,7 +9,11 @@ Reference:[TBA](https://www)
 
 
 ### Installation
-To install fastlin, you must have the [rust toolchain](https://www.rust-lang.org/tools/install) installed.
+The easiest way to install fastlin is via Conda:
+```
+conda install -c rderelle fastlin
+```
+To install fastlin via cargo, you must have the [rust toolchain](https://www.rust-lang.org/tools/install) installed.
 ```
 cargo install fastlin
 ```
