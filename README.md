@@ -1,3 +1,6 @@
+[![Crates.io](https://img.shields.io/crates/v/fastlin)](https://crates.io/crates/fastlin)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/rderelle/fastlin)](https://github.com/rderelle/fastlin/releases)
+
 <h1 align="center">fastlin</h1>
 
 
