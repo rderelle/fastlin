@@ -42,7 +42,7 @@ pub fn get_barcodes(file_name: PathBuf, kmer_size: &u8) -> (HashMap<String, Stri
             // build id
             let id = format!("{}__{}", &collection[0], counter);
             // extract both sides
-            let left_side = &collection[1][100 - half_k_size .. ];
+            let left_side = &collection[1][50 - half_k_size .. ];
             let right_side = &collection[3][.. half_k_size];
             // build barcode
             let barcode = left_side.to_owned() + collection[2] + right_side; 
