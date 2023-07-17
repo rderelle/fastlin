@@ -47,7 +47,7 @@ Alternatively, you can build and test your own kmer barcodes using the Python sc
 Fastlin output consists on a tab-delimited file with the following fields:
 + sample: sample name
 + nb_files: 'single' or 'paired'-end files
-+ k_cov: theoretical kmer coverage of the fastq files(s) based on the number extracted kmer ()
++ k_cov: theoretical kmer coverage of the fastq files(s) based on the number of extracted kmers
 + mixture: pure ('no') or mixed ('yes') sample
 + lineages: lineages detected in the sample with their kmer occurences within paratheses
 + log_barcodes: kmer barcodes passing the minimum occurence threshold, indicated by their kmer occurence and grouped by lineages
