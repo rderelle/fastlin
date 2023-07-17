@@ -44,7 +44,7 @@ Alternatively, you can build and test your own kmer barcodes using the Python sc
 
 
 ### Output file
-Fastlin output consists on a tab-delimited file with the following fields:
+Fastlin output consists of a tab-delimited file with the following fields:
 + sample: sample name
 + nb_files: 'single' or 'paired'-end files
 + k_cov: theoretical kmer coverage of the fastq files(s) based on the number of extracted kmers
