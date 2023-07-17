@@ -1,3 +1,4 @@
+[![Anaconda-Server Badge](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat) (https://bioconda.github.io/recipes/fastlin/README.html) 
 [![Crates.io](https://img.shields.io/crates/v/fastlin)](https://crates.io/crates/fastlin)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/rderelle/fastlin)](https://github.com/rderelle/fastlin/releases)
 
@@ -19,6 +20,10 @@ cargo install fastlin
 Or alternatively you can copy the code from this repository and install it using this command:
 ```
 cargo install --path .
+```
+Alternatively, you can install precompiled binaries using Conda (Linux and macOS Intel processors):
+```
+conda install -c bioconda fastlin
 ```
 You will also need a barcode file (see Input files below).
 
