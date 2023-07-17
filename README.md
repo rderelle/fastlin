@@ -1,4 +1,4 @@
-[![Anaconda-Server Badge](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat) (https://bioconda.github.io/recipes/fastlin/README.html) 
+[![Anaconda-Server Badge](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://bioconda.github.io/recipes/fastlin/README.html) 
 [![Crates.io](https://img.shields.io/crates/v/fastlin)](https://crates.io/crates/fastlin)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/rderelle/fastlin)](https://github.com/rderelle/fastlin/releases)
 
