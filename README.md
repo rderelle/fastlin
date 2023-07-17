@@ -17,7 +17,7 @@ To install fastlin via cargo, you must have the [rust toolchain](https://www.rus
 ```
 cargo install fastlin
 ```
-Or alternatively you can copy the code from this repository and install it using this command:
+Or you can copy the code from this repository and install it using this command:
 ```
 cargo install --path .
 ```
