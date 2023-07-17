@@ -20,7 +20,7 @@ use process_barcodes::process_barcodes::process_barcodes;
 
 
 #[derive(Parser, Debug)]
-#[command(author = None, version = None, about = None, long_about = None)]
+#[command(author = None, version, about = None, long_about = None)]
 struct Args {
     /// directory containing the fastq.gz files
     #[arg(short, long)]
