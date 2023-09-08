@@ -42,7 +42,7 @@ fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 <p>The MTBC barcode file can be downloaded from https://www.github.com/rderelle/barcodes-fastlin. 
 Alternatively, you can build and test your own kmer barcodes using the Python scripts available in that directory.</p> 
 
-A full description of fastlin parameters can be found [here](https://github.com/rderelle/fastlin/blob/main/parameters.md)).
+A full description of fastlin parameters can be found [here](https://github.com/rderelle/fastlin/blob/main/parameters.md).
 
 ### Output file
 Fastlin output consists of a tab-delimited file with the following fields:
