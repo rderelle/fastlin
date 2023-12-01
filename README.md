@@ -63,9 +63,10 @@ The sample ERRxxxxx contains a single strain belonging to lineage 2. This typing
 
 ### Error handling
 <p>When fastlin cannot read a fastq file (e.g. faulty record within the fastq file, corrupt gzip file), it stops scanning it, re-initialise all values to 0 and report the error message in the last field of the output file. Here is an example of output with 3 different errors:</p>
-> #sample&nbsp;&nbsp;&nbsp;&nbsp;nb_files&nbsp;&nbsp;&nbsp;&nbsp;k_cov&nbsp;&nbsp;&nbsp;&nbsp;mixture&nbsp;&nbsp;&nbsp;&nbsp;lineages&nbsp;&nbsp;&nbsp;&nbsp;log_barcodes&nbsp;&nbsp;&nbsp;&nbsp;log_errors 
-dummy1&nbsp;&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error in file "reads/dummy1.fastq.gz": FASTQ parse error: sequence length is 150, but quality length is 50 (record 'ERR551806.5' at line 17).
-dummy2&nbsp;&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error in file "reads/dummy2.fastq.gz": invalid gzip header
+
+> #sample&nbsp;&nbsp;&nbsp;&nbsp;nb_files&nbsp;&nbsp;&nbsp;&nbsp;k_cov&nbsp;&nbsp;&nbsp;&nbsp;mixture&nbsp;&nbsp;&nbsp;&nbsp;lineages&nbsp;&nbsp;&nbsp;&nbsp;log_barcodes&nbsp;&nbsp;&nbsp;&nbsp;log_errors  
+dummy1&nbsp;&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error in file "reads/dummy1.fastq.gz": FASTQ parse error: sequence length is 150, but quality length is 50 (record 'ERR551806.5' at line 17).  
+dummy2&nbsp;&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error in file "reads/dummy2.fastq.gz": invalid gzip header  
 dummy3&nbsp;&nbsp;&nbsp;single&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error in file "reads/dummy3.fastq.gz": corrupt deflate stream
 
 ### TO DO LIST
