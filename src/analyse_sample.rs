@@ -10,7 +10,7 @@ pub mod analyse_sample {
     use hashbrown::HashMap;
         
 
-    pub fn scan_reads(mut vect_files: Vec<PathBuf>, barcodes: HashMap<String, String>, k_size: &u8, limit_kmer: bool, max_kmers: i64, genome_size: i64) -> (HashMap<String, i32>, i32) {
+    pub fn scan_reads(mut vect_files: Vec<PathBuf>, barcodes: HashMap<String, String>, k_size: &u8, limit_kmer: bool, max_kmers: i64, genome_size: i64) -> (HashMap<String, i32>, i32, String) {
         
         // initialise kmer size
         let k = *k_size as usize;
@@ -20,6 +20,7 @@ pub mod analyse_sample {
         
         let mut result_barcodes: HashMap<String, i32> = HashMap::new();
         let mut kmer_counter: i64 = 0;
+        let mut error_message: String = String::new();
 
         'label_loop: for filename in vect_files {
             
@@ -30,8 +31,19 @@ pub mod analyse_sample {
             // lookup records 1 by 1
             while let Some(record) = reader.next() {
             
-                // unwrap record (contains name, sequence and quality)
-                let record_ready = record.unwrap();
+               // unwrap record (contains name, sequence and quality)
+               let record_ready = match record {
+                    Ok(record) => record,
+                    Err(err) => {
+                        // re-initialise barcode results (-> no result)
+                        result_barcodes= HashMap::new();
+                        kmer_counter = 0;
+                        // save error message
+                        error_message = format!("Error in file {:?}: {}", filename, err);
+                        // stop reading file(s)
+                        break 'label_loop;
+                    }
+                };
             
                 // get sequences and sequence length
                 let seq = record_ready.seq();
@@ -80,7 +92,7 @@ pub mod analyse_sample {
         // compute kmer coverage
         let coverage = (kmer_counter as f64 / genome_size as f64).round() as i32;
         
-        (result_barcodes, coverage)
+        (result_barcodes, coverage, error_message)
     }
 
 
@@ -98,7 +110,5 @@ pub mod analyse_sample {
         }; 
         reader
     }
-    
-
 
 }
