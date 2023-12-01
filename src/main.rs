@@ -103,7 +103,7 @@ fn main() {
     
     // create output file
     let mut output_file = File::create(args.output).expect("\n   Warning: couldn't not create output file.\n");
-    output_file.write("#sample	nb_files	k_cov	mixture	lineages	log_barcodes\n".as_bytes()).expect("write failed!");
+    output_file.write("#sample	nb_files	k_cov	mixture	lineages	log_barcodes	log_errors\n".as_bytes()).expect("write failed!");
 
     // initialise progress bar
     let pb = ProgressBar::new(sorted_samples.len().try_into().unwrap());
@@ -121,16 +121,15 @@ fn main() {
         let type_reads = sample_nb_files(sample.to_string(), list_files.len());
         
         // analyse reads
-        let (barcode_found, coverage) = scan_reads(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size, limit_kmer, max_kmers, genome_size);
+        let (barcode_found, coverage, error_message) = scan_reads(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size, limit_kmer, max_kmers, genome_size);
         
         // process barcodes
         let (lineages, mixture, string_occurences) = process_barcodes(barcode_found, args.min_count, args.n_barcodes);
         
         // write sample info into output file
-        write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\n", sample, type_reads, coverage, mixture, lineages, string_occurences).expect("Failed to write to file");
+        write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, type_reads, coverage, mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
         
     }
     
     println!("   done.");
 }
-
