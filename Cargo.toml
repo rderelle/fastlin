@@ -1,6 +1,6 @@
 [package]
 name = "fastlin"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2021"
 description = "an ultra-fast program for MTBC lineage typing"
 repository = "https://github.com/rderelle/fastlin"

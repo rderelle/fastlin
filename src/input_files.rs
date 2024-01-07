@@ -19,7 +19,7 @@ pub mod input_files {
     
 
     fn list_files(dir: &str) -> std::io::Result<Vec<PathBuf>> {
-        print!(" . get list of fastQ files");
+        print!(" . get files from input dir");
         
         let mut result = vec![];
     
@@ -43,9 +43,10 @@ pub mod input_files {
             
             let filename = file.file_name().unwrap().to_str().unwrap();
             
+            // check extension  
             if filename.ends_with(".fastq.gz") || filename.ends_with(".fq.gz") {
 
-                let mut sample = filename.replace(".fastq.gz","").replace(".fq.gz","") ;               
+                let mut sample = filename.replace(".fastq.gz","").replace(".fq.gz","");               
 
                 if sample.ends_with("_1") {sample = sample.trim_end_matches("_1").to_string();}
                 if sample.ends_with("_2") {sample = sample.trim_end_matches("_2").to_string();}
@@ -58,7 +59,19 @@ pub mod input_files {
                     }
                 }
                 
+            } else if filename.ends_with(".fas.gz") || filename.ends_with(".fasta.gz") || filename.ends_with(".fna.gz") {
+            
+                let sample = filename.replace(".fas.gz","").replace(".fasta.gz","").replace(".fna.gz","");               
+                
+                match results.get(&sample) {
+                    Some(_vect_files) => {results.get_mut(&sample).unwrap().push(file);}
+                    None => {
+                        results.insert(sample.to_owned(), Vec::new());
+                        results.get_mut(&sample).unwrap().push(file);
+                    }  
+                }          
             }
+            
 
         }
         println!("	({} samples)", results.len());

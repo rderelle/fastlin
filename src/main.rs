@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::Write;
 use std::str;
 use clap::Parser;
-use std::process;
+use std::{process,path::PathBuf};
 use indicatif::{ProgressBar, ProgressStyle};
 
 
@@ -12,8 +12,11 @@ use get_barcodes::get_barcodes::get_barcodes;
 mod input_files;
 use input_files::input_files::get_input_files;
 
-mod analyse_sample;
-use analyse_sample::analyse_sample::scan_reads;
+mod analyse_sample_fastq;
+use analyse_sample_fastq::analyse_sample_fastq::scan_reads;
+
+mod analyse_sample_fasta;
+use analyse_sample_fasta::analyse_sample_fasta::scan_fasta;
 
 mod process_barcodes;
 use process_barcodes::process_barcodes::process_barcodes;
@@ -53,13 +56,28 @@ struct Args {
 
 
 #[allow(unused_assignments)]
-fn sample_nb_files(name_sample: String, nb_files:usize) -> String {
+fn get_data_type(name_sample: String, vec_files:Vec<PathBuf>) -> String {
     // depending on the number of files, returns 'single', 'paired' or exit with error message
+    
+    let mut count_fasta = 0;
+    let mut count_fastq = 0;
+
+    for file_path in vec_files {
+        if let Some(file_str) = file_path.to_str() {
+            if file_str.ends_with(".fna.gz") || file_str.ends_with(".fas.gz") {
+                count_fasta += 1;
+            } else if file_str.ends_with(".fq.gz") || file_str.ends_with(".fastq.gz") {
+                count_fastq += 1;
+            }
+        }
+    }
+        
     let mut result = "";
-    if nb_files == 1  {result = "single";}
-    else if nb_files == 2  {result = "paired";}
+    if count_fasta == 1 && count_fastq == 0  {result = "assembly";}
+    else if count_fasta == 0 && count_fastq == 1  {result = "single reads";}
+    else if count_fasta == 0 && count_fastq == 2  {result = "paired reads";}
     else {
-        eprintln!("error: the sample {} has {} files", name_sample, nb_files);
+        eprintln!("error: the sample {} has {} fasta and {} fastq files", name_sample, count_fasta, count_fastq);
         process::abort();
     }
     result.to_string()
@@ -103,7 +121,7 @@ fn main() {
     
     // create output file
     let mut output_file = File::create(args.output).expect("\n   Warning: couldn't not create output file.\n");
-    output_file.write("#sample	nb_files	k_cov	mixture	lineages	log_barcodes	log_errors\n".as_bytes()).expect("write failed!");
+    output_file.write("#sample	data_type	k_cov	mixture	lineages	log_barcodes	log_errors\n".as_bytes()).expect("write failed!");
 
     // initialise progress bar
     let pb = ProgressBar::new(sorted_samples.len().try_into().unwrap());
@@ -118,16 +136,31 @@ fn main() {
         pb.inc(1);
 
         // get sequencing type ('single' or 'paired' reads)
-        let type_reads = sample_nb_files(sample.to_string(), list_files.len());
+        let data_type = get_data_type(sample.to_string(), list_files.to_vec());
         
-        // analyse reads
-        let (barcode_found, coverage, error_message) = scan_reads(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size, limit_kmer, max_kmers, genome_size);
+        if data_type == "assembly" {
+             
+             // analyse genome
+             let (barcode_found, error_message) = scan_fasta(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size);
+             
+             // process barcodes
+             let (lineages, mixture, string_occurences) = process_barcodes(barcode_found, 1, args.n_barcodes);
+       
+             // write sample info into output file
+             write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, data_type, "1", mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
+
+        } else if data_type == "single reads" || data_type == "paired reads" {
+             
+             // analyse reads
+             let (barcode_found, coverage, error_message) = scan_reads(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size, limit_kmer, max_kmers, genome_size);
+             
+             // process barcodes
+             let (lineages, mixture, string_occurences) = process_barcodes(barcode_found, args.min_count, args.n_barcodes);
+             
+             // write sample info into output file
+             write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, data_type, coverage, mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
         
-        // process barcodes
-        let (lineages, mixture, string_occurences) = process_barcodes(barcode_found, args.min_count, args.n_barcodes);
-        
-        // write sample info into output file
-        write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, type_reads, coverage, mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
+        }
         
     }
     
