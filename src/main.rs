@@ -74,8 +74,8 @@ fn get_data_type(name_sample: String, vec_files:Vec<PathBuf>) -> String {
         
     let mut result = "";
     if count_fasta == 1 && count_fastq == 0  {result = "assembly";}
-    else if count_fasta == 0 && count_fastq == 1  {result = "single reads";}
-    else if count_fasta == 0 && count_fastq == 2  {result = "paired reads";}
+    else if count_fasta == 0 && count_fastq == 1  {result = "single";}
+    else if count_fasta == 0 && count_fastq == 2  {result = "paired";}
     else {
         eprintln!("error: the sample {} has {} fasta and {} fastq files", name_sample, count_fasta, count_fastq);
         process::abort();
@@ -149,7 +149,7 @@ fn main() {
              // write sample info into output file
              write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, data_type, "1", mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
 
-        } else if data_type == "single reads" || data_type == "paired reads" {
+        } else if data_type == "single" || data_type == "paired" {
              
              // analyse reads
              let (barcode_found, coverage, error_message) = scan_reads(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size, limit_kmer, max_kmers, genome_size);
