@@ -25,7 +25,7 @@ use process_barcodes::process_barcodes::process_barcodes;
 #[derive(Parser, Debug)]
 #[command(author = None, version, about = None, long_about = None)]
 struct Args {
-    /// directory containing the fastq.gz files
+    /// directory containing the data files
     #[arg(short, long)]
     dir: String,
 
@@ -34,7 +34,7 @@ struct Args {
     barcodes: String,
 
     /// output file [out_fastlin.txt]
-    #[arg(short = 'o', long, default_value_t = String::from("output_fastlin.txt"))]
+    #[arg(short = 'o', long, default_value_t = String::from("out_fastlin.txt"))]
     output: String,
 
     /// kmer size
