@@ -9,7 +9,7 @@
 Usage: fastlin [OPTIONS] --dir <DIR> --barcodes <BARCODES>
 
 Options:
-  -d, --dir <DIR>                directory containing the fastq.gz files
+  -d, --dir <DIR>                directory containing the data files
   -b, --barcodes <BARCODES>      file containing the reference barcodes
   -o, --output <OUTPUT>          output file [out_fastlin.txt] [default: output_fastlin.txt]
   -k, --kmer-size <KMER_SIZE>    kmer size [default: 25]
