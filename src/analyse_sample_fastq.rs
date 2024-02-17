@@ -4,7 +4,7 @@ pub mod analyse_sample_fastq {
     use std::fs::File;
     use seq_io::fastq::{Reader,Record};
     use std::io::{BufRead, BufReader};
-    use flate2::read::GzDecoder;
+    use flate2::read::MultiGzDecoder;
     use std::path::PathBuf;
     use std::str;
     use hashbrown::HashMap;
@@ -105,7 +105,7 @@ pub mod analyse_sample_fastq {
             };
         if filename_str.ends_with(".gz")  {filetype = "zip";}
         let reader :Box<dyn BufRead + Send> = match filetype { 
-            "zip" => Box::new(BufReader::new(GzDecoder::new(file))), 
+            "zip" => Box::new(BufReader::new(MultiGzDecoder::new(file))), 
             _ =>     Box::new(BufReader::new(file)), 
         }; 
         reader
