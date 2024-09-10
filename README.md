@@ -32,7 +32,7 @@ The default command line is:
 ```
 fastlin -d /path/directory_fastq_files -b barcodes_file.txt
 ```
-If your dataset does not contain any BAM-derived fastq file, then we would recommend to apply a maximum kmer coverage threshold to reduce runtimes: 
+If your dataset consists of FASTQ files that are not BAM-derived, then you can apply a maximum kmer coverage threshold to reduce runtimes: 
 ```
 fastlin -d /path/directory_fastq_files -b barcode_file.txt -x 80
 ```
@@ -64,6 +64,19 @@ Here is a simple example:
 ERRxxxxx&nbsp;&nbsp;&nbsp;&nbsp;paired&nbsp;&nbsp;&nbsp;&nbsp;118&nbsp;&nbsp;&nbsp;&nbsp;no&nbsp;&nbsp;&nbsp;&nbsp;2 (45)&nbsp;&nbsp;&nbsp;&nbsp;2 (42, 48, 39, 43, 54, 47, 45), 4.1 (4)
 
 The sample ERRxxxxx contains a single strain belonging to lineage 2. This typing is supported by 7 kmer barcodes, with a median number of occurences of 45. Since the abundance of the strain is far below the theoretical kmer coverage (equal here to 118), we can conclude that the sample is likely to contain high level of contaminations or sequencing errors.
+
+### Multithreading
+<p>By default, fastlin runs on 1 thread. The number of threads can be increased using the '-t' parameter, which will split the sample set among all threads (for a single sample, increasing the number of threads will have no impact on runtime).</p>
+
+<p>Here are some examples of runtimes (in seconds) using real-world Mtb genomic data on a M2 Macbook Air:</p>
+<div align="center">
+
+| data               | 1 thread  | 4 threads |
+|--------------------|-----------|-----------|
+| 12 paired FASTQ    |   66.9    | 19.3      |
+| 190 genomes FASTA  |   6.7     | 1.8       |
+
+</div>
 
 ### Error handling
 <p>When fastlin cannot read a fastq file (e.g., faulty record within the fastq file, corrupt gzip file), it stops scanning it, re-initialises all values to 0 and reports the error message in the last column of the output file. Here is an example of output with 3 different errors:</p>
