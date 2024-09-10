@@ -5,6 +5,9 @@ use clap::Parser;
 use std::{process,path::PathBuf};
 use indicatif::{ProgressBar, ProgressStyle};
 
+use rayon::prelude::*;
+use rayon::ThreadPoolBuilder;
+use std::sync::Mutex;
 
 mod get_barcodes;
 use get_barcodes::get_barcodes::get_barcodes;
@@ -52,6 +55,10 @@ struct Args {
     /// maximum kmer coverage
     #[arg(short = 'x', long)]
     max_cov: Option<i64>,
+
+    /// number of threads
+    #[arg(short = 't', long, default_value_t = 1)]
+    nb_threads: usize,
 }
 
 
@@ -127,14 +134,20 @@ fn main() {
     let pb = ProgressBar::new(sorted_samples.len().try_into().unwrap());
     let sty = ProgressStyle::with_template("   {bar:60.cyan/blue} {pos:>7}/{len:7} {msg}",).unwrap().progress_chars("##-");
     pb.set_style(sty);
+
+    // set the fixed number of threads for the global thread pool
+    ThreadPoolBuilder::new().num_threads(args.nb_threads).build_global().unwrap();
+
+    let output_file = Mutex::new(output_file); // Wrap the output file in a Mutex
     
     // process samples 1 by 1
     println!(" . analyse all samples");
-    for (sample, list_files) in &sorted_samples {
-        
+    //for (sample, list_files) in &sorted_samples {
+    sorted_samples.par_iter().for_each(|(sample, list_files)| {
+
         // progress bar
         pb.inc(1);
-
+        
         // get sequencing type ('single' or 'paired' reads)
         let data_type = get_data_type(sample.to_string(), list_files.to_vec());
         
@@ -147,6 +160,7 @@ fn main() {
              let (lineages, mixture, string_occurences) = process_barcodes(barcode_found, 1, args.n_barcodes);
        
              // write sample info into output file
+             let mut output_file = output_file.lock().unwrap(); // Lock the mutex to get a thread-safe reference to the file
              write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, data_type, "1", mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
 
         } else if data_type == "single" || data_type == "paired" {
@@ -158,11 +172,12 @@ fn main() {
              let (lineages, mixture, string_occurences) = process_barcodes(barcode_found, args.min_count, args.n_barcodes);
              
              // write sample info into output file
+             let mut output_file = output_file.lock().unwrap(); // Lock the mutex to get a thread-safe reference to the file
              write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, data_type, coverage, mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
         
         }
         
-    }
+    });    
     
     println!("   done.");
 }
