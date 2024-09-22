@@ -1,6 +1,6 @@
 [package]
 name = "fastlin"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 description = "an ultra-fast program for MTBC lineage typing"
 repository = "https://github.com/rderelle/fastlin"
@@ -17,3 +17,4 @@ ahash = "0.8.3"
 boomphf = "0.5.9"
 indicatif = "0.17.4"
 rayon = "1.5"
+rust-htslib = { version = "*", default-features = false }
