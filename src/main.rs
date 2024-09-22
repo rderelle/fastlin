@@ -21,6 +21,9 @@ use analyse_sample_fastq::analyse_sample_fastq::scan_reads;
 mod analyse_sample_fasta;
 use analyse_sample_fasta::analyse_sample_fasta::scan_fasta;
 
+mod analyse_sample_bam;
+use analyse_sample_bam::analyse_sample_bam::scan_bam;
+
 mod process_barcodes;
 use process_barcodes::process_barcodes::process_barcodes;
 
@@ -68,23 +71,27 @@ fn get_data_type(name_sample: String, vec_files:Vec<PathBuf>) -> String {
     
     let mut count_fasta = 0;
     let mut count_fastq = 0;
+    let mut count_bam = 0;
 
     for file_path in vec_files {
         if let Some(file_str) = file_path.to_str() {
-            if file_str.ends_with(".fna.gz") || file_str.ends_with(".fas.gz") {
+            if file_str.ends_with(".fna.gz") || file_str.ends_with(".fas.gz") || file_str.ends_with(".fasta.gz") {
                 count_fasta += 1;
             } else if file_str.ends_with(".fq.gz") || file_str.ends_with(".fastq.gz") {
                 count_fastq += 1;
+            } else if file_str.ends_with(".bam") || file_str.ends_with(".BAM") {
+                count_bam += 1;
             }
         }
     }
         
     let mut result = "";
-    if count_fasta == 1 && count_fastq == 0  {result = "assembly";}
-    else if count_fasta == 0 && count_fastq == 1  {result = "single";}
-    else if count_fasta == 0 && count_fastq == 2  {result = "paired";}
+    if count_fasta == 1 && count_fastq == 0  && count_bam == 0 {result = "assembly";}
+    else if count_fasta == 0 && count_bam == 0 && count_fastq == 1  {result = "single";}
+    else if count_fasta == 0 && count_bam == 0 && count_fastq == 2  {result = "paired";}
+    else if count_fasta == 0 && count_fastq == 0 && count_bam == 1 {result = "BAM";}
     else {
-        eprintln!("error: the sample {} has {} fasta and {} fastq files", name_sample, count_fasta, count_fastq);
+        eprintln!("error: sample {} has {} fasta, {} fastq and {} BAM files", name_sample, count_fasta, count_fastq, count_bam);
         process::abort();
     }
     result.to_string()
@@ -142,7 +149,6 @@ fn main() {
     
     // process samples 1 by 1
     println!(" . analyse all samples");
-    //for (sample, list_files) in &sorted_samples {
     sorted_samples.par_iter().for_each(|(sample, list_files)| {
 
         // progress bar
@@ -152,7 +158,6 @@ fn main() {
         let data_type = get_data_type(sample.to_string(), list_files.to_vec());
         
         if data_type == "assembly" {
-             
              // analyse genome
              let (barcode_found, error_message) = scan_fasta(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size);
              
@@ -163,8 +168,18 @@ fn main() {
              let mut output_file = output_file.lock().unwrap(); // Lock the mutex to get a thread-safe reference to the file
              write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, data_type, "1", mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
 
-        } else if data_type == "single" || data_type == "paired" {
+        } else if data_type == "BAM" {
+             // analyse BAM file
+             let (barcode_found, coverage, error_message) = scan_bam(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size, genome_size);
              
+             // process barcodes
+             let (lineages, mixture, string_occurences) = process_barcodes(barcode_found, args.min_count, args.n_barcodes);
+       
+             // write sample info into output file
+             let mut output_file = output_file.lock().unwrap(); // Lock the mutex to get a thread-safe reference to the file
+             write!(output_file, "{}\t{}\t{}\t{}\t{}\t{}\t{}\n", sample, data_type, coverage, mixture, lineages, string_occurences, error_message).expect("Failed to write to file");
+        
+        } else if data_type == "single" || data_type == "paired" {
              // analyse reads
              let (barcode_found, coverage, error_message) = scan_reads(list_files.to_vec(), barcodes.to_owned(), &args.kmer_size, limit_kmer, max_kmers, genome_size);
              
