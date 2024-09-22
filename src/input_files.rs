@@ -25,15 +25,17 @@ pub mod input_files {
     
         for path in fs::read_dir(dir)? {
             let path = path?.path();
-            if let Some("gz") = path.extension().and_then(OsStr::to_str) {
-                result.push(path.to_owned());
+            if let Some(ext) = path.extension().and_then(OsStr::to_str) {
+                if ext == "gz" || ext == "bam" || ext == "BAM" {
+                    result.push(path.to_owned());
+                }
             }
         }
         println!("	({} files)", result.len());
         Ok(result)
     }
-    
-    
+        
+        
     fn combine_files(vect_files: Vec<PathBuf>) -> HashMap<String, Vec<PathBuf>> {
         print!(" . combine files into samples");
         
@@ -70,8 +72,18 @@ pub mod input_files {
                         results.get_mut(&sample).unwrap().push(file);
                     }  
                 }          
-            }
+            } else if filename.ends_with(".bam") || filename.ends_with(".BAM") {
             
+                let sample = filename.replace(".bam","").replace(".BAM","");               
+                
+                match results.get(&sample) {
+                    Some(_vect_files) => {results.get_mut(&sample).unwrap().push(file);}
+                    None => {
+                        results.insert(sample.to_owned(), Vec::new());
+                        results.get_mut(&sample).unwrap().push(file);
+                    }  
+                }  
+            }   
 
         }
         println!("	({} samples)", results.len());
@@ -79,6 +91,3 @@ pub mod input_files {
     }
 
 }
-
-
-
