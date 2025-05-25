@@ -181,7 +181,7 @@ fn main() {
             let mut output_file = output_file.lock().unwrap(); // Lock the mutex to get a thread-safe reference to the file
             writeln!(
                 output_file,
-                "{}\t{}\t1\t{}\t{}\t{}\t{}\n",
+                "{}\t{}\t1\t{}\t{}\t{}\t{}",
                 sample, data_type, mixture, lineages, string_occurences, error_message
             )
             .expect("Failed to write to file");
@@ -202,7 +202,7 @@ fn main() {
             let mut output_file = output_file.lock().unwrap(); // Lock the mutex to get a thread-safe reference to the file
             writeln!(
                 output_file,
-                "{}\t{}\t{}\t{}\t{}\t{}\t{}\n",
+                "{}\t{}\t{}\t{}\t{}\t{}\t{}",
                 sample, data_type, coverage, mixture, lineages, string_occurences, error_message
             )
             .expect("Failed to write to file");
@@ -225,7 +225,7 @@ fn main() {
             let mut output_file = output_file.lock().unwrap(); // Lock the mutex to get a thread-safe reference to the file
             writeln!(
                 output_file,
-                "{}\t{}\t{}\t{}\t{}\t{}\t{}\n",
+                "{}\t{}\t{}\t{}\t{}\t{}\t{}",
                 sample, data_type, coverage, mixture, lineages, string_occurences, error_message
             )
             .expect("Failed to write to file");
